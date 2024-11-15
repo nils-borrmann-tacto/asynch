@@ -305,7 +305,7 @@ class Connection:
     async def ping(self) -> bool:
         try:
             if self.reader.reader.at_eof():
-                logger.warning("%s at EOF", self.reader)
+                logger.debug("%s at EOF", self.reader)
                 await self.disconnect()
                 return False
 
