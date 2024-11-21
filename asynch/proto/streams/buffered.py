@@ -3,6 +3,7 @@ from asyncio import StreamReader, StreamWriter
 
 import leb128
 
+from asynch.errors import OperationalError
 from asynch.proto import constants
 from asynch.proto.compression import BaseCompressor, get_decompressor_cls
 
@@ -142,7 +143,11 @@ class BufferedReader:
             packets.append(packet)
             if packet < 0x80:
                 break
-        return leb128.u.decode(packets)
+
+        if packets:
+            return leb128.u.decode(packets)
+        msg = "cannot read an integer from empty packets"
+        raise OperationalError(msg)
 
     async def read_bytes(self, length: int):
         packets = bytearray()

@@ -333,7 +333,6 @@ class Connection:
             # because this is a connection loss case
             if isinstance(e, RuntimeError) and "TCPTransport closed=True" not in str(e):
                 raise e
-            self.connected = False
             logger.debug("Socket closed", exc_info=e)
         return False
 
