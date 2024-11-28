@@ -146,7 +146,7 @@ class BufferedReader:
 
         if packets:
             return leb128.u.decode(packets)
-        msg = "cannot read an integer from empty packets"
+        msg = "Failed to read data from socket. Likely the connection was closed by the remote."
         raise OperationalError(msg)
 
     async def read_bytes(self, length: int):
