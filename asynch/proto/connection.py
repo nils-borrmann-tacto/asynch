@@ -306,7 +306,6 @@ class Connection:
         return ssl_ctx
 
     async def ping(self) -> bool:
-        logger.debug("Ping")
         try:
             if self.reader.reader.at_eof():
                 logger.debug("%s at EOF", self.reader)
