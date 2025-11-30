@@ -86,7 +86,9 @@ class BlockReader:
                 # Only with revision 54465 will the server actually send custom serialization.
                 has_custom_serialization = bool(await self.reader.read_uint8())
                 if has_custom_serialization:
-                    raise ClickHouseException(f"Custom serialization for column {column_name} not supported.")
+                    raise ClickHouseException(
+                        f"Custom serialization for column {column_name} not supported."
+                    )
 
             if n_rows:
                 column = await read_column(
