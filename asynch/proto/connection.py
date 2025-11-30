@@ -556,6 +556,11 @@ class Connection:
         self.connected = True
         await self.send_hello()
         await self.receive_hello()
+        await self.send_addendum()
+
+    async def send_addendum(self):
+        if self.server_info.revision >= constants.DBMS_MIN_PROTOCOL_VERSION_WITH_QUOTA_KEY:
+            await self.writer.write_str(self.client_settings["quota_key"])
 
     def reset_state(self):
         self.writer = None
