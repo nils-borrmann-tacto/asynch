@@ -10,14 +10,15 @@ from asynch.proto.connection import Connection as ProtoConnection
 from asynch.proto.cs import ServerInfo
 
 
-@pytest.fixture()
-async def proto_conn(config) -> AsyncIterator[ProtoConnection]:
+@pytest.fixture(params=[False, "lz4", "zstd"])
+async def proto_conn(request, config) -> AsyncIterator[ProtoConnection]:
     _conn = ProtoConnection(
         user=config.user,
         password=config.password,
         host=config.host,
         port=config.port,
         database=config.database,
+        compression=request.param,
     )
     await _conn.connect()
     yield _conn
